@@ -1,0 +1,291 @@
+#include <Windows.h>
+#include <stdlib.h>
+#include <math.h>
+#include <conio.h>
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+void Triangle(HDC hDC, int leftx, int lefty, int rightx, int righty, int upx, int upy);
+void TriangleBr1(HDC hDC, int leftx, int lefty, int rightx, int righty, int upx, int upy);
+void TriangleBr2(HDC hDC, int leftx, int lefty, int rightx, int righty, int upx, int upy);
+void Bugru(HDC hDC);
+void Elka();
+void Zvezda(HDC hDC, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5, int k);
+int rtSnow(double x1, double y1, double x2, double y2, double x, double y);
+int main()
+{
+	//Эран надо делать 1200*700
+	Elka();
+}
+
+void Elka()
+{
+	int k = 0, i = 0, xr[10000], yr[10000], h[10000];
+	srand(time(NULL));
+	HDC hDC = GetDC(GetConsoleWindow());
+	HPEN SnegP = CreatePen(PS_SOLID, 3, RGB(255, 255, 255));
+	HPEN Pen = CreatePen(PS_SOLID, 3, RGB(0, 0, 0));
+	HPEN StvolP = CreatePen(PS_SOLID, 3, RGB(101, 67, 33));
+	HBRUSH SnegBr = CreateSolidBrush(RGB(255, 255, 255));
+	HBRUSH StvolBr = CreateSolidBrush(RGB(101, 67, 33));
+	HBRUSH Red = CreateSolidBrush(RGB(255, 0, 0));
+	HBRUSH Green = CreateSolidBrush(RGB(255, 179, 0));
+	HPEN red = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
+	HPEN green = CreatePen(PS_SOLID, 3, RGB(255, 179, 0));
+	HPEN blue = CreatePen(PS_SOLID, 3, RGB(0, 0, 255));
+	HBRUSH Blue = CreateSolidBrush(RGB(0, 0, 255));
+	SelectObject(hDC, SnegP);
+	SelectObject(hDC, Blue);
+	Rectangle(hDC, 0, 0, 1200, 700); 
+	SelectObject(hDC, SnegBr);
+	Rectangle(hDC, 0, 500, 1200, 700);
+	//Bugru(hDC);
+	SelectObject(hDC, StvolP);
+	SelectObject(hDC, StvolBr);
+	Rectangle(hDC, 585, 470, 615, 550);
+	SelectObject(hDC, Pen);
+	Triangle(hDC, 475, 470, 725, 470, 600, 300);
+	Triangle(hDC, 485, 370, 715, 370, 600, 200);
+	Triangle(hDC, 510, 270, 690, 270, 600, 125);
+	Zvezda(hDC, 600, 45, 660, 80, 644, 150, 556, 150, 540, 80, 75);
+	i = 0;
+	SelectObject(hDC, SnegP);
+	SelectObject(hDC, SnegBr);
+	for (int g = 0; g < 1000; g++)
+	{
+		xr[g] = rand() % 1201;
+		yr[g] = rand() % 701;
+		h[g] = rand() % 3;
+		Ellipse(hDC, xr[g] - h[g], yr[g] - h[g], xr[g] + h[g], yr[g] + h[g]);
+	}
+	while (i < 1000)
+	{
+		for (int g = 0; g < 1000; g++)
+		{
+			if (yr[g] < 502)
+			{
+				if (rtSnow(540, 80, 586, 80, xr[g], yr[g]) && rtSnow(586, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 660, 80, xr[g], yr[g]) && rtSnow(510, 270, 540, 222, xr[g], yr[g]) && rtSnow(690, 270, 660, 222, xr[g], yr[g]) && rtSnow(485, 370, 510, 334, xr[g], yr[g]) && rtSnow(715, 370, 690, 334, xr[g], yr[g]) && rtSnow(475, 470, 485, 457, xr[g], yr[g]) && rtSnow(725, 470, 715, 457, xr[g], yr[g]))
+				{
+					SelectObject(hDC, Blue);
+					SelectObject(hDC, blue);
+					Ellipse(hDC, xr[g] - h[g], yr[g] - h[g], xr[g] + h[g], yr[g] + h[g]);
+					SelectObject(hDC, SnegP);
+					SelectObject(hDC, SnegBr);
+					yr[g] += h[g] * h[g];
+					Ellipse(hDC, xr[g] - h[g], yr[g] - h[g], xr[g] + h[g], yr[g] + h[g]);
+					if (yr[g] >= 500) yr[g] = 0;
+					if (rtSnow(540, 80, 586, 80, xr[g], yr[g]) && rtSnow(586, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 660, 80, xr[g], yr[g]) && rtSnow(510, 270, 540, 222, xr[g], yr[g]) && rtSnow(690, 270, 660, 222, xr[g], yr[g]) && rtSnow(485, 370, 510, 334, xr[g], yr[g]) && rtSnow(715, 370, 690, 334, xr[g], yr[g]) && rtSnow(475, 470, 485, 457, xr[g], yr[g]) && rtSnow(725, 470, 715, 457, xr[g], yr[g])) g += 0;
+					else
+					{
+						yr[g] = 0;
+					}
+				}
+			}
+		}
+		if (k == 1)
+		{
+			SelectObject(hDC, Red);
+			SelectObject(hDC, red);
+			Ellipse(hDC, 600, 173, 644, 216);
+			SelectObject(hDC, Green);
+			SelectObject(hDC, green);
+			Ellipse(hDC, 566, 198, 607, 241);
+			SelectObject(hDC, Blue);
+			SelectObject(hDC, blue);
+			Ellipse(hDC, 530, 220, 571, 261);
+			SelectObject(hDC, Red);
+			SelectObject(hDC, red);
+			Ellipse(hDC, 526, 284, 569, 328);
+			SelectObject(hDC, Green);
+			SelectObject(hDC, green);
+			Ellipse(hDC, 568, 296, 611, 339);
+			SelectObject(hDC, Blue);
+			SelectObject(hDC, blue);
+			Ellipse(hDC, 612, 303, 655, 346);
+			SelectObject(hDC, Red);
+			SelectObject(hDC, red);
+			Ellipse(hDC, 655, 315, 697, 357);
+			SelectObject(hDC, Green);
+			SelectObject(hDC, green);
+			Ellipse(hDC, 526, 384, 571, 429);
+			SelectObject(hDC, Blue);
+			SelectObject(hDC, blue);
+			Ellipse(hDC, 571, 394, 617, 440);
+			SelectObject(hDC, Red);
+			SelectObject(hDC, red);
+			Ellipse(hDC, 614, 404, 660, 450);
+			SelectObject(hDC, Green);
+			SelectObject(hDC, green);
+			Ellipse(hDC, 660, 414, 707, 461);
+			k = 3;
+		}
+		else
+		{
+			if (k == 2)
+			{
+				SelectObject(hDC, Green);
+				SelectObject(hDC, green);
+				Ellipse(hDC, 600, 173, 644, 216);
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 566, 198, 607, 241);
+				SelectObject(hDC, Red);
+				SelectObject(hDC, red);
+				Ellipse(hDC, 530, 220, 571, 261);
+				SelectObject(hDC, Green);
+				SelectObject(hDC, green);
+				Ellipse(hDC, 526, 284, 569, 328);
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 568, 296, 611, 339);
+				SelectObject(hDC, Red);
+				SelectObject(hDC, red);
+				Ellipse(hDC, 612, 303, 655, 346);
+				SelectObject(hDC, Green);
+				SelectObject(hDC, green);
+				Ellipse(hDC, 655, 315, 697, 357);
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 526, 384, 571, 429);
+				SelectObject(hDC, Red);
+				SelectObject(hDC, red);
+				Ellipse(hDC, 571, 394, 617, 440);
+				SelectObject(hDC, Green);
+				SelectObject(hDC, green);
+				Ellipse(hDC, 614, 404, 660, 450);
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 660, 414, 707, 461);
+				k = 1;
+			}
+			else
+			{
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 600, 173, 644, 216);
+				SelectObject(hDC, Red);
+				SelectObject(hDC, red);
+				Ellipse(hDC, 566, 198, 607, 241);
+				SelectObject(hDC, Green);
+				SelectObject(hDC, green);
+				Ellipse(hDC, 530, 220, 571, 261);
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 526, 284, 569, 328);
+				SelectObject(hDC, Red);
+				SelectObject(hDC, red);
+				Ellipse(hDC, 568, 296, 611, 339);
+				SelectObject(hDC, Green);
+				SelectObject(hDC, green);
+				Ellipse(hDC, 612, 303, 655, 346);
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 655, 315, 697, 357);
+				SelectObject(hDC, Red);
+				SelectObject(hDC, red);
+				Ellipse(hDC, 526, 384, 571, 429);
+				SelectObject(hDC, Green);
+				SelectObject(hDC, green);
+				Ellipse(hDC, 571, 394, 617, 440);
+				SelectObject(hDC, Blue);
+				SelectObject(hDC, blue);
+				Ellipse(hDC, 614, 404, 660, 450);
+				SelectObject(hDC, Red);
+				SelectObject(hDC, red);
+				Ellipse(hDC, 660, 414, 707, 461);
+				k = 2;
+			}
+		}
+		Sleep(100);
+	}
+}
+
+void Triangle(HDC hDC, int leftx, int lefty, int rightx, int righty, int upx, int upy)
+{
+	TriangleBr1(hDC, leftx, lefty, upx, righty, upx, upy);
+	TriangleBr2(hDC, upx, lefty, rightx, righty, upx, upy);
+}
+
+void TriangleBr1(HDC hDC, int leftx, int lefty, int rightx, int righty, int upx, int upy)
+{
+	HPEN Pen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
+	SelectObject (hDC, Pen);
+	if (leftx <= rightx && upy <= lefty)
+	{
+		MoveToEx(hDC, upx, upy, NULL);
+		LineTo(hDC, leftx, lefty);
+		TriangleBr1(hDC, leftx + int((rightx - leftx) / (lefty - upy + 1)) + 1, lefty, rightx, righty, upx, upy + 1);
+	}
+}
+
+void TriangleBr2(HDC hDC, int leftx, int lefty, int rightx, int righty, int upx, int upy)
+{
+	HPEN Pen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
+	SelectObject(hDC, Pen);
+	if (leftx <= rightx && upy <= lefty)
+	{
+		MoveToEx(hDC, upx, upy, NULL);
+		LineTo(hDC, rightx, righty);
+		TriangleBr2(hDC, rightx - int((rightx - upx) / (lefty - upy + 1)), lefty, rightx, righty, upx, upy + 1);
+	}
+}
+
+void Zvezda(HDC hDC, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5, int k)
+{
+	HPEN Pen = CreatePen(PS_SOLID, 3, RGB(240, 179, 0));
+	SelectObject(hDC, Pen);
+	for (int i = k; i >= 0; i--)
+	{
+		MoveToEx(hDC, x1, y1 + i, NULL);
+		LineTo(hDC, x3 - int(0.809*i), y3 - int(0.5878*i));
+		LineTo(hDC, x5 + int(0.809*i), y5 + int(0.5878*i));
+		LineTo(hDC, x2 - int(0.809*i), y2 + int(0.5878*i));
+		LineTo(hDC, x4 + int(0.809*i), y4 - int(0.5878*i));
+		LineTo(hDC, x1, y1 + i);
+	}
+	HPEN Pen2 = CreatePen(PS_SOLID, 3, RGB(189, 139, 9));
+	SelectObject(hDC, Pen2);
+	MoveToEx(hDC, x1, y1 + 55, NULL);
+	LineTo(hDC, x1, y1);
+	MoveToEx(hDC, x1, y1 + 55, NULL);
+	LineTo(hDC, x2, y2);
+	MoveToEx(hDC, x1, y1 + 55, NULL);
+	LineTo(hDC, x3, y3);
+	MoveToEx(hDC, x1, y1 + 55, NULL);
+	LineTo(hDC, x4, y4);
+	MoveToEx(hDC, x1, y1 + 55, NULL);
+	LineTo(hDC, x5, y5);
+}
+
+void Bugru(HDC hDC)
+{
+	HPEN SnegP = CreatePen(PS_SOLID, 3, RGB(255, 255, 255));
+	HBRUSH SnegBr = CreateSolidBrush(RGB(255, 255, 255));
+	SelectObject(hDC, SnegP);
+	SelectObject(hDC, SnegBr);
+	Ellipse(hDC, 0, 450, 200, 550);
+	Ellipse(hDC, 150, 430, 300, 700);
+	Ellipse(hDC, 1000, 350, 1200, 650);
+	Ellipse(hDC, 400, 440, 800, 560);
+	Ellipse(hDC, 900, 420, 1100, 680);
+	Ellipse(hDC, 0, 400, 150, 600);
+	HPEN blue = CreatePen(PS_SOLID, 3, RGB(0, 0, 255));
+	HBRUSH Blue = CreateSolidBrush(RGB(0, 0, 255));
+	SelectObject(hDC, blue);
+	SelectObject(hDC, Blue);
+	Ellipse(hDC, 293, 470, 397, 530);
+	Ellipse(hDC, 803, 470, 905, 530);
+}
+
+int rtSnow(double x1, double y1, double x2, double y2, double x, double y)
+{
+	if (x < x1 || x > x2) return 1;
+	else
+	{
+		if (y < ((y2 - y1) / (x2 - x1) * x + y1 - x1*(y2 - y1) / (x2 - x1)  - 10)) return 1;
+		else return 0;
+	}
+}
+
+
