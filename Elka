@@ -13,6 +13,8 @@ void Bugru(HDC hDC);
 void Elka();
 void Zvezda(HDC hDC, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5, int k);
 int rtSnow(double x1, double y1, double x2, double y2, double x, double y);
+int rtObrSnow(double x1, double y1, double x2, double y2, double x, double y);
+
 int main()
 {
 	//Эран надо делать 1200*700
@@ -65,7 +67,7 @@ void Elka()
 		{
 			if (yr[g] < 502)
 			{
-				if (rtSnow(540, 80, 586, 80, xr[g], yr[g]) && rtSnow(586, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 660, 80, xr[g], yr[g]) && rtSnow(510, 270, 540, 222, xr[g], yr[g]) && rtSnow(690, 270, 660, 222, xr[g], yr[g]) && rtSnow(485, 370, 510, 334, xr[g], yr[g]) && rtSnow(715, 370, 690, 334, xr[g], yr[g]) && rtSnow(475, 470, 485, 457, xr[g], yr[g]) && rtSnow(725, 470, 715, 457, xr[g], yr[g]))
+				if (rtSnow(540, 80, 586, 80, xr[g], yr[g]) && rtSnow(586, 80, 600, 45, xr[g], yr[g]) && rtObrSnow(614, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 660, 80, xr[g], yr[g]) && rtSnow(510, 270, 540, 222, xr[g], yr[g]) && rtObrSnow(690, 270, 660, 222, xr[g], yr[g]) && rtSnow(485, 370, 510, 334, xr[g], yr[g]) && rtObrSnow(715, 370, 690, 334, xr[g], yr[g]) && rtSnow(475, 470, 485, 457, xr[g], yr[g]) && rtObrSnow(725, 470, 715, 457, xr[g], yr[g]))
 				{
 					SelectObject(hDC, Blue);
 					SelectObject(hDC, blue);
@@ -75,7 +77,7 @@ void Elka()
 					yr[g] += h[g] * h[g];
 					Ellipse(hDC, xr[g] - h[g], yr[g] - h[g], xr[g] + h[g], yr[g] + h[g]);
 					if (yr[g] >= 500) yr[g] = 0;
-					if (rtSnow(540, 80, 586, 80, xr[g], yr[g]) && rtSnow(586, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 660, 80, xr[g], yr[g]) && rtSnow(510, 270, 540, 222, xr[g], yr[g]) && rtSnow(690, 270, 660, 222, xr[g], yr[g]) && rtSnow(485, 370, 510, 334, xr[g], yr[g]) && rtSnow(715, 370, 690, 334, xr[g], yr[g]) && rtSnow(475, 470, 485, 457, xr[g], yr[g]) && rtSnow(725, 470, 715, 457, xr[g], yr[g])) g += 0;
+					if (rtSnow(540, 80, 586, 80, xr[g], yr[g]) && rtSnow(586, 80, 600, 45, xr[g], yr[g]) && rtObrSnow(614, 80, 600, 45, xr[g], yr[g]) && rtSnow(614, 80, 660, 80, xr[g], yr[g]) && rtSnow(510, 270, 540, 222, xr[g], yr[g]) && rtObrSnow(690, 270, 660, 222, xr[g], yr[g]) && rtSnow(485, 370, 510, 334, xr[g], yr[g]) && rtObrSnow(715, 370, 690, 334, xr[g], yr[g]) && rtSnow(475, 470, 485, 457, xr[g], yr[g]) && rtObrSnow(725, 470, 715, 457, xr[g], yr[g])) g += 0;
 					else
 					{
 						yr[g] = 0;
@@ -287,5 +289,12 @@ int rtSnow(double x1, double y1, double x2, double y2, double x, double y)
 		else return 0;
 	}
 }
-
-
+int rtObrSnow(double x1, double y1, double x2, double y2, double x, double y)
+{
+	if (x < x2 || x > x1) return 1;
+	else
+	{
+		if (y < ((y2 - y1) / (x2 - x1) * x + y1 - x1*(y2 - y1) / (x2 - x1) - 10)) return 1;
+		else return 0;
+	}
+}
